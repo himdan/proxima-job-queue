@@ -1,0 +1,6 @@
+version: "3.4"
+services:
+  fpm_console:
+    image: stardust_api_fpm:latest
+    volumes:
+      - "./:/var/www/default/htdocs"
