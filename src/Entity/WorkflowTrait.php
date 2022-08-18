@@ -9,8 +9,11 @@
 namespace Proxima\JobQueue\Entity;
 
 
+use Doctrine\ORM\Mapping as ORM;
+
 trait WorkflowTrait
 {
+    #[ORM\Column(type:"boolean", nullable:true)]
     private $state;
 
     /**

@@ -12,7 +12,9 @@ namespace Proxima\JobQueue\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Proxima\JobQueue\Dag;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
 class DagRun implements Dag
 {
     use IdentityTrait;

@@ -8,9 +8,15 @@
 
 namespace Proxima\JobQueue\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 
 trait IdentityTrait
 {
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private $id;
 
     /**

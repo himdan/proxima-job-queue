@@ -9,15 +9,19 @@
 namespace Proxima\JobQueue\Entity;
 
 
+use Doctrine\ORM\Mapping as ORM;
+
 trait TimestampTrait
 {
     /**
      * @var ?\DateTimeInterface
      */
+    #[ORM\Column(type:"datetime", nullable:true)]
     private $createdAt;
     /**
      * @var ?\DateTimeInterface
      */
+    #[ORM\Column(type:"datetime", nullable:true)]
     private $updatedAt;
 
     /**
@@ -51,8 +55,6 @@ trait TimestampTrait
     {
         $this->updatedAt = $updatedAt;
     }
-
-
 
 
 }

@@ -8,16 +8,19 @@
 
 namespace Proxima\JobQueue\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 
 trait RunTimeTrait
 {
     /**
      * @var ?\DateTimeInterface $startAt
      */
+    #[ORM\Column(type:"datetime", nullable:true)]
     private $startAt;
     /**
      * @var  ?\DateTimeInterface $endAt
      */
+    #[ORM\Column(type:"datetime", nullable:true)]
     private $endAt;
 
     /**

@@ -10,7 +10,9 @@ namespace Proxima\JobQueue\Entity;
 
 
 use Proxima\JobQueue\Task;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
 class TaskRun implements Task
 {
     use IdentityTrait;
@@ -19,11 +21,19 @@ class TaskRun implements Task
     use RunTimeTrait;
     /**
      * @var ?DagRun $dagRun
+     *
      */
+    #[ORM\ManyToOne(targetEntity:DagRun::class)]
     private $dagRun;
-
+    /**
+     * @var string|null
+     */
+    #[ORM\Column(type:"string", nullable:true)]
     private $taskId;
-
+    /**
+     * @var string|null $serviceId
+     */
+    #[ORM\Column(type:"string", nullable:true)]
     private $serviceId;
 
     /**
