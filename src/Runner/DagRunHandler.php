@@ -32,10 +32,10 @@ class DagRunHandler implements MessageHandlerInterface
     public function __invoke(DagRunTrigger $dagRunTrigger)
     {
         $dagRun = $this->dagManager->findDagRunById($dagRunTrigger->getDagRunId());
+
         if(!$this->dagManager->isRunnable($dagRun)){
             return;
         }
-
         $this->dagManager->run($dagRun);
 
 

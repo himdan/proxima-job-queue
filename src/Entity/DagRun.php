@@ -25,8 +25,13 @@ class DagRun implements Dag
     /**
      * @var ArrayCollection|Collection|array
      */
+    #[ORM\OneToMany(targetEntity:TaskRun::class, mappedBy:"dagRun")]
     private $tasks;
 
+    /**
+     * @var string
+     */
+    #[ORM\Column(type:"string",nullable:true)]
     private $dagId;
 
     /**
@@ -44,7 +49,7 @@ class DagRun implements Dag
 
     public function getTasks(): array
     {
-        return $this->tasks;
+        return $this->tasks->toArray();
     }
 
     /**
@@ -59,6 +64,14 @@ class DagRun implements Dag
     {
         $this->dagId = $dagId;
         return $this;
+    }
+
+
+    public function addTask(TaskRun $taskRun)
+    {
+        if(!$this->tasks->contains($taskRun)){
+            $this->tasks->add($taskRun);
+        }
     }
 
 

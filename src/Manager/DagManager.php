@@ -56,7 +56,7 @@ class DagManager
     }
 
 
-    public function register(DagInterface $dag)
+    public function createTaskRun(DagInterface $dag)
     {
         $dagRun = new DagRun();
         $dagRun->setDagId($dag->getDagId());
@@ -64,12 +64,15 @@ class DagManager
         foreach ($dag->getTasks() as $task) {
             $taskRun = new TaskRun($dagRun);
             $taskRun->setServiceId($task->getServiceId());
+            $taskRun->setTaskId($task->getTaskId());
+            $dagRun->addTask($taskRun);
             $this->entityManager->persist($taskRun);
         }
         $this->entityManager->flush();
         $this->eventDispatcher->dispatch(
             new DagRunCreatedEvent($dagRun->getId()
             ));
+        return $dagRun;
     }
 
     public function next(TaskRun $taskRun, $upstream = null)
@@ -99,7 +102,7 @@ class DagManager
 
     public function isRunnable(DagRun $dagRun): bool
     {
-        return in_array($dagRun->getState(), [TaskManager::Queued]);
+        return in_array($dagRun->getState(), [null]);
     }
 
     public function findDagRunById($id): ?DagRun

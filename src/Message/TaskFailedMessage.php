@@ -23,5 +23,15 @@ class TaskFailedMessage extends TaskStateMessage
 
     }
 
+    /**
+     * @return \Exception
+     */
+    public function getException(): \Exception
+    {
+        return $this->exception;
+    }
+
+
+
 
 }

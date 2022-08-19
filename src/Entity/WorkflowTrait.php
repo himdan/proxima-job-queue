@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait WorkflowTrait
 {
-    #[ORM\Column(type:"boolean", nullable:true)]
+    #[ORM\Column(type:"integer", nullable:true)]
     private $state;
 
     /**

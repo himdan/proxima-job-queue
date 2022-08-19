@@ -1,5 +1,48 @@
 framework:
+    messenger:
+        transports:
+            state: 'in-memory://'
+            trigger: 'in-memory://'
+
+        routing:
+            '\Proxima\JobQueue\Triggers\DagRunTrigger': trigger
+            '\Proxima\JobQueue\Triggers\TaskRunTrigger': trigger
+            '\Proxima\JobQueue\Message\TaskFailedMessage': state
+            '\Proxima\JobQueue\Message\TaskRunningMessage': state
+            '\Proxima\JobQueue\Message\TaskSuccessMessage': state
     secret: test
     test: true
     router:
         resource: "%kernel.project_dir%/tests/Functional/config/routing.yaml"
+
+services:
+    Symfony\Component\DependencyInjection\ContainerInterface:
+        alias: "service_container"
+    test.message_bus:
+        alias: Symfony\Component\Messenger\MessageBusInterface
+        public: true
+    Proxima\JobQueue\Manager\:
+        autoconfigure: true
+        autowire: true
+        public: true
+        resource: '../../../src/Manager'
+    Proxima\JobQueue\Subscriber\:
+        autoconfigure: true
+        autowire: true
+        public: true
+        resource: '../../../src/Subscriber'
+    Proxima\JobQueue\Runner\:
+        autoconfigure: true
+        autowire: true
+        public: true
+        resource: '../../../src/Runner'
+    Proxima\JobQueue\Handler\:
+        autoconfigure: true
+        autowire: true
+        public: true
+        resource: '../../../src/Handler'
+    Proxima\JobQueue\Tests\Dags\:
+        autoconfigure: true
+        autowire: true
+        public: true
+        resource: '../../Dags'

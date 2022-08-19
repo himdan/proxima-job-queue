@@ -47,7 +47,7 @@ class TaskRunHandler implements MessageHandlerInterface
     }
 
 
-    protected function __invoke(TaskRunTrigger $message)
+    public function __invoke(TaskRunTrigger $message)
     {
         $taskRunId = $message->getTaskRunId();
         /**

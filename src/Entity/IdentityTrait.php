@@ -15,8 +15,8 @@ trait IdentityTrait
 {
 
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy:'AUTO')]
+    #[ORM\Column(type:"integer")]
     private $id;
 
     /**

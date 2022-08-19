@@ -23,7 +23,7 @@ class TaskRun implements Task
      * @var ?DagRun $dagRun
      *
      */
-    #[ORM\ManyToOne(targetEntity:DagRun::class)]
+    #[ORM\ManyToOne(targetEntity:DagRun::class, inversedBy:"tasks")]
     private $dagRun;
     /**
      * @var string|null
@@ -69,6 +69,17 @@ class TaskRun implements Task
     {
        return $this->taskId;
     }
+
+    /**
+     * @param string|null $taskId
+     */
+    public function setTaskId(?string $taskId): void
+    {
+        $this->taskId = $taskId;
+    }
+
+
+
 
 
 }

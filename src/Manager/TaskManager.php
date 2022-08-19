@@ -77,7 +77,7 @@ class TaskManager
         $taskIds = array_map(function (Task $task) {
             return $task->getTaskId();
         }, $tasks);
-        $taskRuns = array_filter($dagRun->getTaskRuns(), function (Task $taskRun) use ($taskIds) {
+        $taskRuns = $dagRun->getTaskRuns()->filter(function (Task $taskRun) use ($taskIds) {
             return in_array($taskRun->getTaskId(), $taskIds);
         });
         /**
@@ -85,6 +85,9 @@ class TaskManager
          */
         foreach ($taskRuns as $taskRun) {
             $taskRun->setState(self::Queued);
+        }
+        if(null === $dagRun->getState()){
+            $dagRun->setState(self::Queued);
         }
 
         $this->entityManager->flush();

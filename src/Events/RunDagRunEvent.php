@@ -8,8 +8,7 @@
 
 namespace Proxima\JobQueue\Events;
 
-
-use Symfony\Component\Workflow\Event\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class RunDagRunEvent extends Event
 {
@@ -21,11 +20,29 @@ class RunDagRunEvent extends Event
      * @param $dagRunId
      * @param $upstream
      */
-    public function __construct($dagRunId, $upstream)
+    public function __construct($dagRunId, $upstream=null)
     {
         $this->dagRunId = $dagRunId;
         $this->upstream = $upstream;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDagRunId()
+    {
+        return $this->dagRunId;
+    }
+
+    /**
+     * @return null
+     */
+    public function getUpstream()
+    {
+        return $this->upstream;
+    }
+
+
 
 
 }
