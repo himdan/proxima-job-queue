@@ -9,6 +9,7 @@
 namespace Proxima\JobQueue\Tests\Functional;
 
 
+use Proxima\JobQueue\Entity\DagInstance;
 use Proxima\JobQueue\Entity\DagRun;
 use Proxima\JobQueue\Entity\TaskRun;
 use Proxima\JobQueue\Events\DagRunCreatedEvent;
@@ -67,13 +68,14 @@ class DagManagerTest extends BaseTestCase
     {
 
 
-        $dagRun = $this->dagManager->createTaskRun($this->etl);
+        $dagRun = $this->dagManager->createDagInstance($this->etl);
 
 
         $this->assertGreaterThan(0, $this->dagRunCreatedEventTimes);
 
 
         $this->assertNotNull($dagRun->getId());
+        $this->assertInstanceOf(DagInstance::class , $dagRun->getDagInstance());
 
         $this->assertCount(
             3,

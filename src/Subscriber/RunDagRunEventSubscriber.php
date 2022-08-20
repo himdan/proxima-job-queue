@@ -52,6 +52,9 @@ class RunDagRunEventSubscriber implements EventSubscriberInterface
 
 
     public function dispatch(RunDagRunEvent $event){
+        /**
+         * @var TaskRun[] $taskRuns
+         */
         $taskRuns = $this->entityManager->getRepository(TaskRun::class)->findBy(
             [
                 'dagRun' => $event->getDagRunId(),

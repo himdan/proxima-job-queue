@@ -43,7 +43,7 @@ class RunnerTest extends BaseTestCase
          */
         $dagManager = self::$kernel->getContainer()->get(DagManager::class);
 
-        $this->dagRun = $dagManager->createTaskRun($etl);
+        $this->dagRun = $dagManager->createDagInstance($etl);
 
     }
 

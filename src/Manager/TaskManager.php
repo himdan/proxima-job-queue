@@ -57,9 +57,22 @@ class TaskManager
 
     public function updateState(TaskRun $taskRun, $state)
     {
+        $stateMapper = [
+            self::Queued => function(TaskRun $taskRun){
+                $taskRun->setStartAt(new \DateTime());
+            },
+            self::STATE_SUCCESS => function(TaskRun $taskRun){
+                $taskRun->setEndAt(new \DateTime());
+            },
+        ];
         $taskRun->setState($state);
+        if(in_array($taskRun->getState(), array_keys($stateMapper))){
+            $stateMapper[$taskRun->getState()]($taskRun);
+        }
         $this->entityManager->flush();
     }
+
+
 
     /**
      * @param Task[] $tasks

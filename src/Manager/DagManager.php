@@ -37,28 +37,37 @@ class DagManager
     private $taskManager;
 
     /**
+     * @var DagInstanceManager
+     */
+    private $dagInstanceManager;
+
+    /**
      * DagManager constructor.
      * @param EntityManagerInterface $entityManager
      * @param EventDispatcherInterface $eventDispatcher
      * @param ContainerInterface $container
+     * @param DagInstanceManager $dagInstanceManager
      * @param TaskManager $taskManager
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
         ContainerInterface $container,
+        DagInstanceManager $dagInstanceManager,
         TaskManager $taskManager)
     {
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->container = $container;
+        $this->dagInstanceManager = $dagInstanceManager;
         $this->taskManager = $taskManager;
     }
 
-
-    public function createTaskRun(DagInterface $dag)
+    public function createDagInstance(DagInterface $dag)
     {
-        $dagRun = new DagRun();
+        $dagInstance = $this->dagInstanceManager->makeDagInstance($dag);
+        $this->entityManager->persist($dagInstance);
+        $dagRun = new DagRun($dagInstance);
         $dagRun->setDagId($dag->getDagId());
         $this->entityManager->persist($dagRun);
         foreach ($dag->getTasks() as $task) {

@@ -49,7 +49,7 @@ class Etl implements DagInterface
 
     public function getDagId()
     {
-        return self::class;
+        return static::class;
     }
 
     public function getTasks(): array

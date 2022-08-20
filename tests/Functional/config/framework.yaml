@@ -18,6 +18,9 @@ framework:
 services:
     Symfony\Component\DependencyInjection\ContainerInterface:
         alias: "service_container"
+    test.entity_manager:
+        alias: Doctrine\ORM\EntityManagerInterface
+        public: true
     test.message_bus:
         alias: Symfony\Component\Messenger\MessageBusInterface
         public: true
@@ -46,3 +49,10 @@ services:
         autowire: true
         public: true
         resource: '../../Dags'
+
+    Proxima\JobQueue\Provider\DagInstanceProvider:
+        public: true
+        arguments:
+            - "@Proxima\\JobQueue\\Manager\\DagInstanceManager"
+            - "%kernel.project_dir%/tests/Dags"
+            - "Proxima\\JobQueue\\Tests\\Dags"

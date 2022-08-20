@@ -43,6 +43,7 @@ class TaskRun implements Task
     public function __construct($dagRun)
     {
         $this->dagRun = $dagRun;
+        $this->setCreatedAt(new \DateTime());
     }
 
     public function getDagRun(): ?DagRun
@@ -79,7 +80,11 @@ class TaskRun implements Task
     }
 
 
-
+    public function setState($state): void
+    {
+        $this->state = $state;
+        $this->setUpdatedAt(new \DateTime());
+    }
 
 
 }

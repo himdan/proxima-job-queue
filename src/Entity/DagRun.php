@@ -33,13 +33,20 @@ class DagRun implements Dag
      */
     #[ORM\Column(type:"string",nullable:true)]
     private $dagId;
+    /**
+     * @var ?DagInstance $dagInstance
+     */
+    #[ORM\ManyToOne(targetEntity:DagInstance::class)]
+    private $dagInstance;
 
     /**
      * DagRun constructor.
      */
-    public function __construct()
+    public function __construct(DagInstance $dagInstance)
     {
+        $this->dagInstance = $dagInstance;
         $this->tasks = new ArrayCollection();
+        $this->setCreatedAt(new \DateTime());
     }
 
     public function getDagId()
@@ -74,7 +81,29 @@ class DagRun implements Dag
         }
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDagInstance()
+    {
+        return $this->dagInstance;
+    }
 
+    /**
+     * @param $dagInstance
+     * @return DagRun
+     */
+    public function setDagInstance($dagInstance): self
+    {
+        $this->dagInstance = $dagInstance;
+        return $this;
+    }
+
+    public function setState($state): void
+    {
+        $this->state = $state;
+        $this->setUpdatedAt(new \DateTime());
+    }
 
 
 }

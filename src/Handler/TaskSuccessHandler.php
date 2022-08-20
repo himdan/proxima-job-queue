@@ -44,6 +44,7 @@ class TaskSuccessHandler implements  MessageHandlerInterface
         if(!$taskRun instanceof TaskRun){
             return;
         }
+
         $this->taskManager->updateState($taskRun, TaskManager::STATE_SUCCESS);
         $this->dagManager->next(
             $taskRun,
