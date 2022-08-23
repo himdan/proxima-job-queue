@@ -1,7 +1,6 @@
 doctrine:
     dbal:
-        driver:   pdo_sqlite
-        memory:   true
+      url: 'sqlite:///%kernel.project_dir%/tests/Functional/extra/app.db'
 
     orm:
       auto_generate_proxy_classes: true

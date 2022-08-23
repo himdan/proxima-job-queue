@@ -9,8 +9,9 @@
 namespace Proxima\JobQueue\Provider;
 use Proxima\JobQueue\Manager\DagInstanceManager;
 use Symfony\Component\Finder\Finder;
+use Traversable;
 
-class DagInstanceProvider
+class DagInstanceProvider implements \Countable, \IteratorAggregate
 {
 
     /**
@@ -25,6 +26,10 @@ class DagInstanceProvider
      * @var string
      */
     private $dagNamespace;
+    /**
+     * @var callable|null
+     */
+    private $preFilterCb;
 
     /**
      * DagInstanceProvider constructor.
@@ -42,6 +47,16 @@ class DagInstanceProvider
         $this->dagNamespace = $dagNamespace;
     }
 
+    /**
+     * @param callable|null $preFilterCb
+     * @return DagInstanceProvider
+     */
+    public function setPreFilterCb(?callable $preFilterCb): DagInstanceProvider
+    {
+        $this->preFilterCb = $preFilterCb;
+        return $this;
+    }
+
 
     public function getCollection(): \Generator
     {
@@ -50,12 +65,27 @@ class DagInstanceProvider
         foreach ($finder as $file) {
             $className = rtrim($this->dagNamespace, '\\') . '\\' . $file->getFilenameWithoutExtension();
             if (class_exists($className) && $this->dagInstanceManager->isDag($className)) {
-                yield $this->dagInstanceManager->makeDagInstance($className);
+                $instance = $this->dagInstanceManager->makeDagInstance($className);
+                if(!is_callable($this->preFilterCb)){
+                    yield $instance;
+                    continue;
+                }
+                if(call_user_func($this->preFilterCb, $instance)){
+                    yield $instance;
+                }
             }
         }
     }
 
+    public function getIterator()
+    {
+        return $this->getCollection();
+    }
 
+    public function count()
+    {
+        return count(iterator_to_array($this->getCollection()));
+    }
 
 
 }

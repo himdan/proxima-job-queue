@@ -1,3 +1,4 @@
 imports:
   - { resource: framework.yaml }
   - { resource: doctrine.yaml }
+  - { resource: api_platform.yaml }

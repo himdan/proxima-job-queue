@@ -13,7 +13,8 @@ framework:
     secret: test
     test: true
     router:
-        resource: "%kernel.project_dir%/tests/Functional/config/routing.yaml"
+        type: api_platform
+        resource: '%kernel.project_dir%/tests/Functional/Kernel.php'
 
 services:
     Symfony\Component\DependencyInjection\ContainerInterface:
@@ -44,6 +45,16 @@ services:
         autowire: true
         public: true
         resource: '../../../src/Handler'
+    Proxima\JobQueue\DataPersister\:
+        autoconfigure: true
+        autowire: true
+        public: true
+        resource: '../../../src/DataPersister'
+    Proxima\JobQueue\DataProvider\:
+        autoconfigure: true
+        autowire: true
+        public: true
+        resource: '../../../src/DataProvider'
     Proxima\JobQueue\Tests\Dags\:
         autoconfigure: true
         autowire: true

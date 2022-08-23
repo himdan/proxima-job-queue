@@ -7,8 +7,13 @@
  */
 
 namespace Proxima\JobQueue\Tests\Functional;
+use ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle;
+use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
+use Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle;
+use Hautelook\AliceBundle\HautelookAliceBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
+use Symfony\Bundle\MakerBundle\MakerBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -39,6 +44,9 @@ class Kernel extends BaseKernel
         return [
             new FrameworkBundle(),
             new DoctrineBundle(),
+            new ApiPlatformBundle(),
+            new MakerBundle(),
+            new DAMADoctrineTestBundle()
         ];
     }
 
@@ -50,6 +58,10 @@ class Kernel extends BaseKernel
     public function getCacheDir():string
     {
         return sys_get_temp_dir().'/'.Kernel::VERSION.'/ProximaJobQueue/'.substr(sha1($this->config), 0, 6).'/cache';
+    }
+
+    public static function getCacheLocation(){
+        return sys_get_temp_dir().'/'.Kernel::VERSION.'/ProximaJobQueue';
     }
 
     public function getContainerClass(): string

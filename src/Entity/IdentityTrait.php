@@ -9,7 +9,7 @@
 namespace Proxima\JobQueue\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use ApiPlatform\Core\Annotation\ApiProperty;
 
 trait IdentityTrait
 {
@@ -17,6 +17,7 @@ trait IdentityTrait
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy:'AUTO')]
     #[ORM\Column(type:"integer")]
+    #[ApiProperty(identifier:true)]
     private $id;
 
     /**

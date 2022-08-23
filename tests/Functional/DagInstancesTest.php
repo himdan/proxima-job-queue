@@ -2,25 +2,31 @@
 /**
  * Created by PhpStorm.
  * User: chehimi
- * Date: 19/08/22
- * Time: 08:50 م
+ * Date: 22/08/22
+ * Time: 09:18 م
  */
 
 namespace Proxima\JobQueue\Tests\Functional;
 
 
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
-class BaseTestCase extends WebTestCase
+class DagInstancesTest extends ApiTestCase
 {
-
     static protected function createKernel(array $options = array()): KernelInterface
     {
         $config = isset($options['config']) ? $options['config'] : 'default.yaml';
 
         return new Kernel($config);
+    }
+
+    protected function setUp(): void
+    {
+        $this->createClient();
+        $this->importDatabaseSchema();
+
     }
 
     protected final function importDatabaseSchema()
@@ -42,5 +48,16 @@ class BaseTestCase extends WebTestCase
 
             }
         }
+    }
+
+    public function testGetCollection(): void
+    {
+        // The client implements Symfony HttpClient's `HttpClientInterface`, and the response `ResponseInterface`
+        $response =  static::createClient()->request('GET', '/dag_instances');
+        $this->assertResponseIsSuccessful();
+        // Asserts that the returned content type is JSON-LD (the default)
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+        $this->assertCount(3, $response->toArray()['hydra:member']);
+
     }
 }

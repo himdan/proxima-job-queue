@@ -18,12 +18,19 @@
         "symfony/messenger": "^6.1",
         "symfony/process": "^6.1",
         "symfony/workflow": "^6.1",
-        "dragonmantank/cron-expression": "^3.3"
+        "dragonmantank/cron-expression": "^3.3",
+        "api-platform/core": "^2.6",
+        "api-platform/schema-generator": "^4.0"
     },
     "require-dev": {
         "symfony/maker-bundle": "^1.45",
         "phpunit/phpunit": "^9",
-        "symfony/browser-kit": "^6.1"
+        "symfony/browser-kit": "^6.1",
+        "symfony/http-client": "^6.1",
+        "justinrainbow/json-schema": "^5.2",
+        "hautelook/alice-bundle": "^2.11",
+        "dama/doctrine-test-bundle": "^7.1",
+        "doctrine/doctrine-fixtures-bundle": "^3.4"
     },
     "config": {
         "allow-plugins": {

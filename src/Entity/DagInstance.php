@@ -9,8 +9,10 @@
 namespace Proxima\JobQueue\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
-#[ORM\Entity]
+#[ApiResource(collectionOperations:["get"],itemOperations:["get"])]
+#[ORM\Entity()]
 class DagInstance
 {
 
@@ -200,6 +202,14 @@ class DagInstance
     public function getDagId(): string
     {
         return $this->dagId;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
 
