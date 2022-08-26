@@ -6,13 +6,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: php-actions/composer@v5
+      - run: |
+          php -v
+          php -m
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v2
         with:
           php_extensions: xdebug
-          bootstrap: vendor/autoload.php
-          configuration: ./phpunit.xml.dist
+          bootstrap: ${{ github.workspace }}/vendor/autoload.php
+          configuration: ${{ github.workspace }}/phpunit.xml.dist
           args: --coverage-text
         env:
           XDEBUG_MODE: coverage
-          TEST_NAME: Scarlett
+          TEST_NAME: integration_test
