@@ -33,7 +33,8 @@ jobs:
         env:
           XDEBUG_MODE: coverage
           TEST_NAME: integration_test
-      - run: |
-          if [ -s ${{ github.workspace }}/diff_files ]; then |
-           ./vendor/bin/phpunit --filter $(cat ${{ github.workspace }}/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - ) --coverage-text
-          fi
+      - name: code coverage
+        id: code-coverage
+        if: "'' != ${cat github.workspace }}/diff_files }"
+        run: |
+          ./vendor/bin/phpunit --filter $(cat ${{ github.workspace }}/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - ) --coverage-text
