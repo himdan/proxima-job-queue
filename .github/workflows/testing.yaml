@@ -13,10 +13,10 @@ jobs:
       - name: List all changed files
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file" >> .github/actions/api-test/diff_files
+            echo "$file" >> ${pwd}/diff_files
           done
           pwd
-          cat .github/actions/api-test/diff_files
+          cat ${pwd}/diff_files
       - uses: php-actions/composer@v5
       - run: |
           php -v
