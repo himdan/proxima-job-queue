@@ -30,7 +30,8 @@ jobs:
         with:
           php_extensions: xdebug
           bootstrap: ./tests/bootstrap.php
-          args: --coverage-text --filter $(cat ${{ github.workspace }}/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - )
         env:
           XDEBUG_MODE: coverage
           TEST_NAME: integration_test
+        - run:
+            ./vendor/phpunit --filter $(cat ${{ github.workspace }}/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - ) --coverage-text
