@@ -8,12 +8,15 @@ jobs:
       - uses: php-actions/composer@v5
       - run: |
           php -v
-          php -m
+          php -m.
+          mkdir -p ./tests/Functional/config
+          php ./test/Functional/console doctrine:database:create --env=test
+          php ./test/Functional/console d:s:u -f --env=test
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v2
         with:
           php_extensions: xdebug
-          bootstrap: ./vendor/autoload.php
+          bootstrap: ./tests/bootstrap.php
           configuration: ./phpunit.xml.dist
           args: --coverage-text
         env:
