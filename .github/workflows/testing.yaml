@@ -13,7 +13,6 @@ jobs:
           bootstrap: vendor/autoload.php
           configuration: ./phpunit.xml.dist
           args: --coverage-text
-          php_version: "8.2"
         env:
           XDEBUG_MODE: coverage
           TEST_NAME: Scarlett
