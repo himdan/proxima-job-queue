@@ -12,6 +12,10 @@ namespace Proxima\JobQueue\Handler;
 use Proxima\JobQueue\Message\TaskFailedMessage;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
+/**
+ * Class TaskFailedHandler
+ * @package Proxima\JobQueue\Handler
+ */
 class TaskFailedHandler implements MessageHandlerInterface
 {
     public function __invoke(TaskFailedMessage $taskFailedMessage)
