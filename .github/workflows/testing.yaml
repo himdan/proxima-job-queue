@@ -9,7 +9,10 @@ jobs:
       - run: |
           php -v
           php -m.
-          mkdir -p ./tests/Functional/config
+          mkdir -p ./tests/Functional/extra
+          id -g
+          id -u
+          php -
           php ./tests/Functional/console doctrine:database:create --env=test
           php ./tests/Functional/console d:s:u -f --env=test
       - name: PHPUnit Tests
