@@ -33,6 +33,10 @@ jobs:
         env:
           XDEBUG_MODE: coverage
           TEST_NAME: integration_test
+      - name: generate coverage config
+        id: coverage config
+        run: |
+          php phpunit.config.php
       - name: code coverage
         id: code-coverage
         run: |

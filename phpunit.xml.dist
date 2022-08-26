@@ -10,17 +10,19 @@
          stopOnFailure="false"
          bootstrap="./tests/bootstrap.php">
 
-    <testsuites>
-        <testsuite name="Proxima JobQueue Test Suite">
-            <directory>./tests</directory>
-        </testsuite>
-    </testsuites>
     <coverage cacheDirectory=".phpunit.cache/code-coverage"
               processUncoveredFiles="true">
         <include>
             <directory suffix=".php">src</directory>
         </include>
     </coverage>
+
+    <testsuites>
+        <testsuite name="Proxima JobQueue Test Suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+
     <extensions>
         <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
     </extensions>
