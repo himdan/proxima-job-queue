@@ -1,6 +1,8 @@
 <?php
 $content = file_get_contents('./diff_files');
-$files = array_filter(explode("\n", $content));
+$files = array_filter(explode("\n", $content), function($item){
+    return str_contains($item, 'src/');
+});
 
 $directories = array_map(function($item){
     return "<directory suffix=\".php\">${item}</directory>";
