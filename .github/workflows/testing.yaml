@@ -36,10 +36,8 @@ jobs:
       - name: generate coverage config
         id: coverage-config
         run: |
-          php phpunit.config.php
+          php phpunit.config.php > phpunit.xml
       - name: code coverage
         id: code-coverage
         run: |
-          if [[ -s ${{ github.workspace }}/diff_files ]]; then
-            XDEBUG_MODE=coverage php ./vendor/bin/phpunit --filter $(cat ${{ github.workspace }}/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - ) --coverage-text ;
-          fi;
+          XDEBUG_MODE=coverage php ./vendor/bin/phpunit --configuration phpunit.xml --coverage-text tests
