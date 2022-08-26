@@ -33,5 +33,5 @@ jobs:
         env:
           XDEBUG_MODE: coverage
           TEST_NAME: integration_test
-        - run:
-            ./vendor/phpunit --filter $(cat ${{ github.workspace }}/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - ) --coverage-text
+      - run: |
+          ./vendor/phpunit --filter $(cat ${{ github.workspace }}/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - ) --coverage-text
