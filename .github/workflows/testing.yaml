@@ -13,8 +13,8 @@ jobs:
         uses: php-actions/phpunit@v2
         with:
           php_extensions: xdebug
-          bootstrap: ${{ github.workspace }}/vendor/autoload.php
-          configuration: ${{ github.workspace }}/phpunit.xml.dist
+          bootstrap: ./vendor/autoload.php
+          configuration: ./phpunit.xml.dist
           args: --coverage-text
         env:
           XDEBUG_MODE: coverage
