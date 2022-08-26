@@ -11,6 +11,10 @@ use Proxima\JobQueue\Manager\DagManager;
 use Proxima\JobQueue\Triggers\DagRunTrigger;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
+/**
+ * Class DagRunHandler
+ * @package Proxima\JobQueue\Runner
+ */
 class DagRunHandler implements MessageHandlerInterface
 {
 
