@@ -44,4 +44,6 @@ jobs:
       - name: check coverage ratio
         id: check-coverage-ratio
         run: |
-          php -d memory_limit=-1 ./phpunit-threshold.php target/coverage/index.xml 90
+          if [[ -s target/coverage/index.xml  ]]; then
+            php -d memory_limit=-1 ./phpunit-threshold.php target/coverage/index.xml 90 ;
+          fi;
