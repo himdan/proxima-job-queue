@@ -35,6 +35,7 @@ jobs:
           TEST_NAME: integration_test
       - name: code coverage
         id: code-coverage
-        if: "'' != ${cat github.workspace }}/diff_files }"
         run: |
-          ./vendor/bin/phpunit --filter $(cat ${{ github.workspace }}/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - ) --coverage-text
+          if [ -s ${{ github.workspace }}/diff_files ]; then \
+           ./vendor/bin/phpunit --filter $(cat ${{ github.workspace }}/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - ) --coverage-text \
+          fi
