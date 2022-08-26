@@ -8,7 +8,10 @@
 
 namespace Proxima\JobQueue\Message;
 
-
+/**
+ * Class TaskRunningMessage
+ * @package Proxima\JobQueue\Message
+ */
 class TaskRunningMessage extends TaskStateMessage
 {
 
