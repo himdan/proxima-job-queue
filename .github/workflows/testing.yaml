@@ -13,10 +13,10 @@ jobs:
       - name: List all changed files
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file" >> ${pwd}/diff_files
+            echo "$file" >> ${{pwd}}/diff_files
           done
           pwd
-          cat ${pwd}/diff_files
+          cat ${{pwd}}/diff_files
       - uses: php-actions/composer@v5
       - run: |
           php -v
@@ -29,7 +29,7 @@ jobs:
         with:
           php_extensions: xdebug
           bootstrap: ./tests/bootstrap.php
-          args: --coverage-text --filter \$(cat .github/actions/api-test/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - )
+          args: --coverage-text --filter ${{cat .github/actions/api-test/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - }}
         env:
           XDEBUG_MODE: coverage
           TEST_NAME: integration_test
