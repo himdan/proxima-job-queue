@@ -4,14 +4,24 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v26
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file" >> .github/actions/api-test/diff_files
+          done
+          pwd
+          cat .github/actions/api-test/diff_files
       - uses: php-actions/composer@v5
       - run: |
           php -v
           php -m.
           mkdir -p ./tests/Functional/extra
-          id -g
-          id -u
           php ./tests/Functional/console doctrine:database:create --env=test
           php ./tests/Functional/console d:s:u -f --env=test
       - name: PHPUnit Tests
@@ -19,8 +29,7 @@ jobs:
         with:
           php_extensions: xdebug
           bootstrap: ./tests/bootstrap.php
-          configuration: ./phpunit.xml.dist
-          args: --coverage-text
+          args: --coverage-text --filter \$(cat .github/actions/api-test/diff_files | grep 'src/' | sed 's/.*\///' | sed 's/\.php//' | paste -sd '|' - )
         env:
           XDEBUG_MODE: coverage
           TEST_NAME: integration_test
