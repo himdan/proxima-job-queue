@@ -8,7 +8,10 @@
 
 namespace Proxima\JobQueue\Message;
 
-
+/**
+ * Class TaskStateMessage
+ * @package Proxima\JobQueue\Message
+ */
 class TaskStateMessage
 {
     private $taskRunId;
