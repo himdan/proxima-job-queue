@@ -9,6 +9,9 @@ cc: init
 dr: init
 	docker-compose exec -u root fpm_console bash -c "php tests/Functional/console debug:router"
 
+xdebug:
+	docker-compose exec -u root fpm_console bash -c "pecl install xdebug && docker-php-ext-enable xdebug "
+
 test_coverage: cc
 	docker-compose exec -u root fpm_console bash -c "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-text  tests"
 
