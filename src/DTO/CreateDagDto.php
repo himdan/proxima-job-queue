@@ -12,7 +12,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
 
 
-#[ApiResource(collectionOperations:["post"], itemOperations: [])]
+#[ApiResource(collectionOperations:["post"], itemOperations: ["get"])]
 class CreateDagDto
 {
 

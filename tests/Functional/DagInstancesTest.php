@@ -10,6 +10,8 @@ namespace Proxima\JobQueue\Tests\Functional;
 
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
+use Proxima\JobQueue\DTO\CreateDagDto;
+use Proxima\JobQueue\Tests\Dags\Etl;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -59,5 +61,23 @@ class DagInstancesTest extends ApiTestCase
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         $this->assertCount(3, $response->toArray()['hydra:member']);
 
+    }
+
+    public function testCreateDagInstance(): void
+    {
+        // The client implements Symfony HttpClient's `HttpClientInterface`, and the response `ResponseInterface`
+        $response =  static::createClient()->request('POST', '/create_dag_dtos', ['json' => [
+            'dagId' => Etl::class
+        ]]);
+        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+        $this->assertJsonContains([
+            '@context' => '/contexts/CreateDagDto',
+            '@type' => 'CreateDagDto',
+            'dagId' => 'Proxima\JobQueue\Tests\Dags\Etl'
+        ]);
+
+        $this->assertMatchesRegularExpression('~^/create_dag_dtos/\d+$~', $response->toArray()['@id']);
+        $this->assertMatchesResourceItemJsonSchema(CreateDagDto::class);
     }
 }
