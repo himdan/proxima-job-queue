@@ -32,7 +32,11 @@ class DagInstanceManager
         $this->entityManager = $entityManager;
     }
 
-
+    /**
+     * @param $className
+     * @return bool
+     * @throws \ReflectionException
+     */
     public function isDag($className): bool
     {
         $reflectionClass = new \ReflectionClass($className);
