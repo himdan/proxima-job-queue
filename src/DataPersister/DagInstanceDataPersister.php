@@ -43,8 +43,6 @@ class DagInstanceDataPersister implements DataPersisterInterface
     public function persist($data)
     {
         $dagInstance = $this->dagInstanceManager->makePersistentDagInstance($data->getDagId());
-        echo get_class($dagInstance);
-        echo PHP_EOL;
         $data->setId($dagInstance->getId());
         return $data;
     }
