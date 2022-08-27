@@ -33,7 +33,7 @@ class DagInstanceDataPersister implements DataPersisterInterface
 
     public function supports($data): bool
     {
-        return CreateDagDto::class;
+        return $data instanceof CreateDagDto;
     }
 
     /**
@@ -43,6 +43,8 @@ class DagInstanceDataPersister implements DataPersisterInterface
     public function persist($data)
     {
         $dagInstance = $this->dagInstanceManager->makePersistentDagInstance($data->getDagId());
+        echo get_class($dagInstance);
+        echo PHP_EOL;
         $data->setId($dagInstance->getId());
         return $data;
     }
